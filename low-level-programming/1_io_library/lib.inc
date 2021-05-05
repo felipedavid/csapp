@@ -35,8 +35,8 @@ print_char:
     ret
 
 print_newline:
-    xor rax, rax
-    ret
+    mov rdi, 0xa
+    jmp print_char
 
 
 print_uint:
@@ -90,22 +90,26 @@ print_int:
     mov rdi, r12 
 
 .print_un:
-    call print_uint
-
     pop r12
-    ret
+    jmp print_uint
 
 string_equals:
-    xor rax, rax
-.loop:
-    mov rcx, byte [rdi]
-    cmp rcx, byte [rsi]
+    xor rcx, rcx
+    mov cl, byte [rdi]
+    cmp byte [rsi], cl
     jne .not_equal
 
-.not_equal:
+    mov rdx, rsi
+    inc rdi
+    inc rsi
+
+    cmp byte[rdx], 0x0
+    jne string_equals
+    
     mov rax, 1
-    jmp .end
-.end:
+    ret
+.not_equal:
+    xor rax, rax
     ret
 
 
