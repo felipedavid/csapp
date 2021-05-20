@@ -1,0 +1,112 @@
+Practice problem 1.1:
+    S = 1 / ((1 - 0.6) + 0.6 / 1.5)
+    S = 1.25x
+    This will speed up the trip 0.625x
+
+    1.67 = 1 ((1 - 0.6) + 0.6 / k)
+    k = 3
+    Weel I would need to speed up a factor of 3. So, 300 km/h
+
+
+Practice problem 1.2:
+    4 = 1 / ((0.1 + 0.9 / k))
+    k = 6
+    A factor of 6
+
+
+Practice problem 2.1:
+    A. 0x39A7F8 to binary      -> 0011 1001 1010 0111 1111 1000
+    B. 1100100101111011 to hex -> 0xC97B
+    C. 0xD5E4C to binary       -> 1101 0101 1110 0100 1100
+    D. 1001101110011110110101 to hex -> 0x26E7B5
+
+
+Practice problem 2.2:
+    n    2^n(dec)    2^n(hex)
+    9      512         0x200
+   19     524288       0x80000 
+   14     16,385       0x4000
+   16     65,536       0x10000
+   17     131072       0x20000 
+    5      32          0x20 
+    7      128         0x80
+
+
+Practice problem 2.3:
+    Decimal    Binary    Hexadecimal
+      0      0000 0000   0x00
+     167     1010 0111   0xA7
+     62      0011 1110   0x3E
+     188     1011 1100   0xBC
+     55      0011 0111   0x37
+     136     1000 1000   0x88
+     243     1111 0011   0xF3
+     82      0101 0010   0x52
+     172     1010 1100   0xAC
+     231     1110 0111   0xE7
+
+
+Practice problem 2.4:
+    A. 0x503c + 0x8    = 0x5044
+    B. 0x503c - 0x40   = 0x4FFC
+    C. 0x503c + 64     = 0x507C
+    D. 0x50ea - 0x503c = 0xAE
+
+
+Practice problem 2.5:
+    int val = 0x87654321;
+    A. Little endian: 21     | Big endian: 87
+    B. Little endian: 2143   | Big endian: 8765
+    C. Little endian: 214365 | Big endian: 876543
+
+
+Practice problem 2.6:   
+                  not match _______match_________
+    0x359141   -> 000000001 101011001000101000001
+    0x4A564504 -> 010010100 101011001000101000001 00
+                  ********* *********************
+
+Practice problem 2.7:
+    -> 61 62 63 64 65 66
+
+
+Practice problem 2.8:
+    a   [01101001]
+    b   [01010101]
+
+   ~a   [10010110]
+   ~b   [10101010]
+
+ a & b  [01000001]
+ a | b  [01111101]
+ a ^ b  [00111100]
+
+
+Practice problem 2.9:
+    A. Black <-> White
+       Blue  <-> Yellow
+       Green <-> Magenta
+       Cyan  <-> Red
+
+    B. Blue | Green  = Cyan
+       Yellow & Cyan = Green
+       Red ^ Magenta = Blue
+
+
+Practice problem 2.10:
+    void implace_swap(int *x, int *y) {
+        *y = *x ^ *y; // Step 1
+        *x = *x ^ *y; // Step 2
+        *y = *x ^ *y; // Step 3
+    }
+    Step       *x                    *y
+    Initially   a                     b
+    Step 1      a                    a^b
+    Step 2     a=a^(a^b)=b            b
+    Step 3      a                    b=b^b^a=a
+
+
+Practice problem 2.11:
+    A. x 
+    B. x ^ x = 0
+    C. first < last
