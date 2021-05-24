@@ -1,0 +1,145 @@
+1.1:
+    A: S = 1/((.4+(0.6/1.25))
+       Answer: The speed up for the trip will be 25%.
+        
+    B: 1.67 = 1/(0.4+(0.6/k))
+       Answer: 300km/h
+
+
+1.2:
+    A: 2 = 1/(0.2+(0.8/k))
+       Answer: 2.67
+
+
+2.1:
+    A. 0x39A7F8 -> 0011 1001 1010 0111 1111 1000
+    B. 1100 1001 0111 1011 -> 0xC97B
+    C. 0xD5E4C -> 1101 0101 1110 0100 1100
+    D. 0010 0110 1110 0111 1011 0101 -> 0x26E7B5
+
+
+2.2:
+    n    2^n(d)   2^n(h)
+    9    512      0x200
+    19   524288   0x80000
+    14   16384    0x4000
+    16   65536    0x10000
+    17   131072   0x20000
+    5    32       0x20
+    7    128      0x80
+
+
+2.3:
+    Decimal   Binary    Hex
+      0     0000 0000   0x00
+    167     1010 0111   0xA7
+     62     0011 1110   0x3E
+    188     1011 1100   0xBC
+     55     0011 0111   0x37
+    136     1000 1000   0x88
+    243     1111 0011   0xF3
+     82     0101 0010   0x52
+    172     1010 1100   0xAC
+    231     1110 0111   0xE7
+
+
+2.4:
+    A. 0x503c + 0x8    = 0x5044
+    B. 0x503c - 0x40   = 0x4ffc
+    C. 0x503c + 60     = 0x507c
+    D. 0x50ea - 0x503c = 0xAE
+
+
+2.5:
+    0x87654321
+    A. Little endian: 21                Big Endian: 87
+    B. Little endian: 21 43             Big Endian: 87 65  
+    C. Little endian: 21 43 65          Big Endian: 87 65 43
+
+
+2.6:
+    3510593                     _____________________
+    A. 0x00359141 -> 00000000001101011001000101000001
+    B. 0x4A564504 ->   01001010010101100100010100000100
+    
+
+2.7:
+    Answer: 61 62 63 64 65 66
+
+
+2.8:
+    a    [01101001]
+    b    [01010101]
+    ~a   [10010110]
+    ~b   [10101010]
+   a&b   [01000001]
+   a|b   [01111101]
+   a^b   [00111100]
+
+
+2.9:
+    A. Black <-> White
+       Blue  <-> Yellow
+       Green <-> Magenta
+       Cyan  <-> Red
+
+    B. Blue | Green  -> Cyan
+       Yellow & Cyan -> Cyan
+       Red ^ Magenta -> Blue
+
+
+2.10:
+    Step        *x        *y
+    Initially    a         b
+    Step 1       a        a^b
+    Step 2      0^b       a^b
+    Step 3    x=0^b=b  y=0^b^a^b=a
+
+
+2.11:
+    A. first = last = k
+    B. Because the xor operation always returns zero to equal operands.
+    C. Line 4, replace the less equal operator to a less than.
+
+
+2.12:
+    A. x & 0xFF = 0x00000021
+    B. ((~(x & (~0xFF)) & (~0xFF)) | (x & 0xFF)) = 0x789ABC21, Textbook: x ^ ~0xFF
+    C. x | 0xFF = 0x876543F
+
+2.13:
+	int bis(int x, int m);
+	int bic(int x, int m);
+
+	int bool_or(int x, int y) {
+		int result = bis(x, y);
+		return result;
+	}
+
+	int bool_xor(int x, int y) {
+		int result = bis(bic(x, y), bic(y, x));
+		return result;
+	}
+
+
+2.14:
+	x = 0x66, y = 0x39
+	x & y    = 0x20
+	x | y    = 0x7F
+	~x | ~y  = 0xDF
+    x & !y   = 0x0
+    x && y   = 0x1
+    x || y   = 0x1
+    !x || !y = 0x0
+    x && ~y  = 0x1
+
+
+2.15:
+    return !(x^y);
+
+2.16:
+            x            x<<3          x>>2(log)        x>>2(ari)
+    0xC3 11000011    00011000 0x18   00110000 0x30    11110000 0xF0
+    0x75 01110101    10101000 0xA8   00011101 0x1D    00011101 0x1D
+    0x87 10000111    00111000 0x38   00100001 0x21    11100001 0xE1
+    0x66 01100110    00110000 0x30   00011001 0x19    00011001 0x19
