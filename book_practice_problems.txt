@@ -155,4 +155,47 @@
 
 2.18:
     A. 736
-    B. 
+    B. -88
+    C. 40
+    D. -48
+    E. 120
+    F. 136
+    G. 504
+    H. 192
+    I. -72
+
+2.19:
+    -8 -> 8
+    -3 -> 13
+    -2 -> 14
+    -1 -> 15
+     0 -> 0
+     5 -> 5
+
+2.20:
+    If the number was positive, just leave as it is. If it was negative, just
+    sum the number to the 2^(word size), in this case 2^4 = 16.
+
+2.21:
+        Expression                      Type        Evaluation
+    -2147483647-1 == 2147483648U      unsigned          1
+    -2147483647-1 < 2147483647        signed            1
+    -2147483647-lU < 2147483647       unsigned          0
+    -2147483647-1 < -2147483647       signed            1
+    -2147483647-lU < -2147483647      unsigned          1
+
+2.22:
+    A.   1011 = -8 + 3 = -5
+    B.  11011 = -16 + 8 + 3 = -5
+    C. 111011 = -32 + 16 + 8 + 3 = -5
+
+2.23:
+    A.
+        w           fun1(w)       fun2(w)
+    0x00000076    0x00000076    0x00000076
+    0x87654321    0x00000021    0x00000021
+    0x000000C9    0x000000C9    0xFFFFFFC9
+    0xEDCBA987    0x00000087    0xFFFFFF87
+    
+    B. Isolating specific bits without caring about sign and isolating
+    conserving their sign.
