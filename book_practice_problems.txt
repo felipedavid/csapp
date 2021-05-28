@@ -199,3 +199,25 @@
     
     B. Isolating specific bits without caring about sign and isolating
     conserving their sign.
+
+2.24:
+          Unsigned                Two's complement
+   Original     Truncated      Original    Truncated
+      0             0             0            0
+      2             2             2            2
+      9             1            -7            1
+     11             3            -5            3
+     15             7            -1           -1
+
+2.25:
+    Length its a unsigned variable, when length is zero and we decrement it by
+    one, we underflow the variable to UMax. So, the loop will try to access
+    elements way way outside of the array's boundaries causing a memory error.
+    That should be corrected by declaring length as a integer value.
+
+2.26:
+    A. When string 't' is greater then 's'.
+    B. The return values from strlen calls are unsigned, making the expression
+    unsigned and never less than zero. The function still works when 't' == 0,
+    but fails when 't' > 's'.
+    C. return strlen(s) > strlen(t);
