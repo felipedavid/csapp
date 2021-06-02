@@ -137,12 +137,14 @@
 2.15:
     return !(x^y);
 
+
 2.16:
             x            x<<3          x>>2(log)        x>>2(ari)
     0xC3 11000011    00011000 0x18   00110000 0x30    11110000 0xF0
     0x75 01110101    10101000 0xA8   00011101 0x1D    00011101 0x1D
     0x87 10000111    00111000 0x38   00100001 0x21    11100001 0xE1
     0x66 01100110    00110000 0x30   00011001 0x19    00011001 0x19
+
 
 2.17:
     Hex    Binary    B2U    B2T
@@ -152,6 +154,7 @@
     0x8     1000      8     -8
     0xD     1101     13     -3
     0xF     1111     15     -1
+
 
 2.18:
     A. 736
@@ -163,6 +166,7 @@
     G. 504
     H. 192
     I. -72
+
 
 2.19:
     -8 -> 8
@@ -176,6 +180,7 @@
     If the number was positive, just leave as it is. If it was negative, just
     sum the number to the 2^(word size), in this case 2^4 = 16.
 
+
 2.21:
         Expression                      Type        Evaluation
     -2147483647-1 == 2147483648U      unsigned          1
@@ -184,10 +189,12 @@
     -2147483647-1 < -2147483647       signed            1
     -2147483647-lU < -2147483647      unsigned          1
 
+
 2.22:
     A.   1011 = -8 + 3 = -5
     B.  11011 = -16 + 8 + 3 = -5
     C. 111011 = -32 + 16 + 8 + 3 = -5
+
 
 2.23:
     A.
@@ -200,6 +207,7 @@
     B. Isolating specific bits without caring about sign and isolating
     conserving their sign.
 
+
 2.24:
           Unsigned                Two's complement
    Original     Truncated      Original    Truncated
@@ -209,11 +217,13 @@
      11             3            -5            3
      15             7            -1           -1
 
+
 2.25:
     Length its a unsigned variable, when length is zero and we decrement it by
     one, we underflow the variable to UMax. So, the loop will try to access
     elements way way outside of the array's boundaries causing a memory error.
     That should be corrected by declaring length as a integer value.
+
 
 2.26:
     A. When string 't' is greater then 's'.
@@ -221,3 +231,21 @@
     unsigned and never less than zero. The function still works when 't' == 0,
     but fails when 't' > 's'.
     C. return strlen(s) > strlen(t);
+
+
+2.27:
+int uadd_ok(unsigned x, unsigned y) {
+    return (x + y) >= x;
+}
+
+
+2.28:
+   Hex  Decimal       Decimal  Hex
+    0      0              0     0
+    5      5             11     b
+    8      8              8     8
+    D      13             3     3
+    F      15             1     1
+
+
+2.29:
