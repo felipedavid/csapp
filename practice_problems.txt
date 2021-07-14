@@ -1,0 +1,17 @@
+1.1:
+A)
+    S = 1/((1-0.6) + 0.6/1.5)
+    S = 1.25
+    The speed up will be 1.25x
+
+B)
+    1.67 = 1/(0.4 + 0.6/3)
+    k = 3
+    Factor of 3, 300km/hr
+
+1.2:
+    4 = 1/(0.1 + 0.9/k)
+    k = 6
+    This part would need to get 6x faster
+
+
