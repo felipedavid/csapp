@@ -239,7 +239,70 @@ postive and always greater than 0. Returning always true.
 The code can be fixed by just changing the expression to "strlen(s) >
 strlen(t)".
 
+
 2.27
 int uadd_ok(unsigned x, unsigned y) {
     return (x + y) >= x;
 }
+
+
+2.28
+    x         -x  
+Hex  Dec   Dec  Hex
+ 0    0     0    0
+ 5    5    11    B
+ 8    8     8    8
+ D   13     3    3
+ F   15     1    1
+
+
+ 2.29
+   x    y     x+y     x+y t      case
+ -12   -15    -27       5         1
+10100 10001  100101   00101
+ -8     -8    -16      -16        2
+11000 11000   10000   10000
+ -9      8     -1      -1         2
+10111 01000   11111   11111
+  2     5       7       7         3
+00010 00101   00111   00111
+ 12     4      16      -16        4
+01100 00100  010000   10000
+
+
+2.30
+int tadd_ok(int x, int y) {
+    int pos_over = x < 0 && y < 0 && (x + y) >= 0;
+    int neg_over = x >= 0 && y >= 0 && (x + y) < 0;
+    return !pos_over && !neg_over;
+}
+
+
+2.31
+Because it dosen't really check overflow. "sum-x == y" will always be true
+even when the value overflows.
+
+
+2.32
+TMin. Just check for TMin.
+
+
+2.33
+Hex Dec   Dec Hex
+ 0   0     0   0
+ 5   5    -5   B
+ 8  -8    -8   8
+ D  -3     3   3
+ F  -1     1   1
+ The bit patterns are the same
+
+
+2.34
+Un  4 [100]  5 [101]  20 [10100]  4 [100]
+Tw -4 [100] -3 [101]  12 [1100] -4 [100]
+
+Un  2 [010]  7 [111]  14 [1110]  6 [110]
+Tw  2 [010] -1 [111]  -2 [110]  -2 [110]
+
+Un  6 [110]  6 [110]  36 [100100]  4 [100]
+Tw -2 [110] -2 [110]   4 [100]    -4 [100]
