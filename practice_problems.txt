@@ -330,4 +330,10 @@ movw %dx, (%rax)
 
 
 3.3
-
+movb $0xF, (%ebx) // We are referencing memory with only to a 32 bit register
+movl %rax, (%rsp) // We are trying to move a double word from a quad word register
+movw (%rax), 4(%4rsp) // we can't move something from memory to memory
+movb %al, %sl // sl don't refer to any real register
+movq %rax, $0x123 // We can't move something into a immediate
+movl %eax, %dx // Destination operator has the wrong size 
+movb %si, 8(%rbp) // we specify that we are moving 8 bits in the instructions, but %si is 16 bits
