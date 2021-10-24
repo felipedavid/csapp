@@ -1,0 +1,133 @@
+3.1:
+%rax             0x100
+0x104            0xAB
+$0x108           0x108
+(%rax)           0xFF
+4(%rax)          0xAB
+9(%rax,%rdx)     0x11
+260(%rcx,%rdx)   0x13
+0xFC(,%rcx,4)    0xFF
+(%rax,%rdx,4)    0x11
+
+3.2:
+movl %eax, (%rsp)
+movw (%rax), %dx
+movb $0xFF, %bl
+movb (%rsp,%rdx,4), %dl
+movq (%rdx), %rax
+movw %dx, (%rax)
+
+3.3:
+movb $0xF, (%ebx) // We can't use the low 32 bits of a register to compute the address of a memory reference
+movl %rax, (%rsp) // The instruction suffix is imcotible with operand size
+movw (%rax), 4(%rsp) // The move instruction can't have two operands referencing memory
+movb %al, %sl // %sl is not a real register
+movq %rax, $0x123 // We copy a value to a immediate, it dosen't make sense
+movl %eax, %rdx // Instruction suffix and operand size mismatch
+movb %si, 8(%rbp) // Mismatch on instruction suffix and  operand size
+
+3.4:
+src_t           dest_t
+long            long            movq (%rdi), %rax
+                                movq %rax, (%rsi)
+
+char            int             movsbl (%rdi), %eax
+                                movl %eax, (%rsi)
+
+char            unsigned        movsbl (%rdi), %eax
+                                movl %eax, (%rsi)
+
+unsigned char   long            movzbq (%rdi), %rax
+                                movq %rax, (%rsi)
+
+int             char            movl (%rdi), %eax
+                                movb %al, (%rsi)
+
+unsigned        unsigned char   movl (%rdi), %eax
+                                movb %al, (%rsi)
+
+char            short           movsbw (%rdi), %ax
+                                movw %ax, (%rsi)
+
+
+3.5:
+void decode1(long *xp, long *yp, long *zp) {
+    long x = *xp;
+    long y = *yp;
+    long z = *zp;
+
+    *yp = x;
+    *zp = y;
+    *xp = z;
+}
+
+
+3.6:
+leaq 6(%rax), %rdx          x+6
+leaq (%rax, %rcx), %rdx     x+y
+leaq (%rax,%rcx,4), %rdx    x+4*y
+leaq 7(%rax,%rax,8), %rdx   7+9*x
+leaq 0xA(,%rcx,4), %rdx     4*y+10
+leaq 9(%rax,%rcx,2), %rdx   x+2*y+9
+
+
+3.7:
+short scale3(shrot x, short y, short z) {
+    short t = x * 5 + y * 2 + z * 8;
+    return t;
+}
+
+
+3.8:
+addq %rcx, (%rax)         0x100  0x100
+subq %rdx, 8(%rax)        0x108  0xA8
+imulq $16, (%rax,%rdx,8)  0x118  0x110
+incq 16(%rax)             0x110  0x14
+decq %rcx                 %rcx   0x0
+subq %rdx, %rax           %rax   0xFD
+
+
+3.9:
+movq %rdi, %rax
+salq $4, %rax
+movl %esi, %ecx
+sarq %cl, %rax
+
+
+3.10:
+long t1 = x | y;
+long t2 = t1 >> 3;
+long t3 = ~t2;
+long t4 = z - t3;
+
+
+3.11:
+A) The effect will be set the register passed in both operands to zero. By the xor property,
+if we compute the same value we get 0. This instruction is encoded is less bytes than a
+mov instruction.
+B) movq $0, %rdx
+C) The xor instruction requires 3 byte while the mov instruction require 7.
+
+
+3.12:
+movq %rdx, %r8
+movq %rdi, %rax
+xor %edx, %edx
+divq %rsi
+movq %rax, (%r8)
+movq %rdx, (%rcx)
+ret
+
+
+3.13:
+A. int, <
+B. short, >=
+C. unsigned char, <=
+D. "long long" and "unsigned long long", !=
+
+
+3.14:
+A. long, >=
+B. short or unsigned short, ==
+C. unsigned char, >
+D. int, <=
