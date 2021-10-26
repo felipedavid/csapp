@@ -186,4 +186,109 @@ B. 46 cycles
 
 
 3.20:
+leaq 7(%rdi), %rax // res = x + 7
+testq %rdi, %rdi   
+cmovns %rdi, %rax // if x >= 0, res = x
+sarq $3, %rax     // res /= 8
+ret
+A. return >= 0 ? x : x + 7 / ;
 
+3.21:
+long test(long x, long y) {
+    long val = x * 8;
+    if (y > 0) {
+        if (x < y) val = y - x;
+        else val = x & y;
+    } else if (y <= -2) val = x + y;
+    return val;
+}
+
+
+3.22:
+A. 13
+B. It dosen't overflow.
+
+
+3.23:
+A. x = rax, y = rcx, n = rbx
+B. The compiler notices that all operations are done in X, and X is always on register,
+so it changes the code to always reference the register instead of memory.
+C.
+long dw_loop(long x)
+dw_loop:
+    movq %rdi, %rax // set result = x;
+    movq %rdi, %rcx // y = x * x;
+    imulq %rdi, %rcx 
+    leaq (%rdi, %rdi), %rdx // n = x * 2;
+.L2:
+    leaq 1(%rcx,%rax), %rax // result += y+1;
+    sub $1, %rdx // n--;
+    testq %rdx, %rdx
+    jg .L2 // If n > 0, goto .L2
+    ret
+
+
+3.24:
+long loop_while(long a, long b) {
+    long result = 1;
+    while (a < b) {
+        result = result * (a + b);
+        a = a + 1;
+    }
+    return result;
+}
+
+
+3.25:
+long loop_while2(long a, long b) {
+    lnog result = b;
+    while (b > 0) {
+        result = result * a;
+        b = b - a;
+    }
+    return result;
+}
+
+
+3.26:
+A. Jump to middle
+B. 
+short val = 0;
+while (x) {
+    val ^= x;
+    x = x >> 1;
+}
+return val & 1;
+C. I have no idea.
+
+
+3.27:
+long fact_for(long n) {
+    int result = 1;
+    int i = 2;
+    if (n <= 1) goto end;
+loop:
+    result *= i;
+    i++;
+    if (i <= n) goto loop;
+end:
+    return result;
+}
+
+
+3.28:
+A.
+long fun_b(unsigned long x) {
+    long val = 0;
+    long i;
+    for (i = 100; i != 0; i--) {
+        val = x & 1 | (val + val);
+        x >>= 1;
+    }
+    return val;
+}
+
+
+3.29:
+A. It would be a infinite loop, the continue statements don't let i to udpate it's value.
+B. Make the goto jump all loop body with exception of the update portion.
