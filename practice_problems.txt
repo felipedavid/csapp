@@ -275,3 +275,8 @@ C. No idea. (I still don't get these bit level operations.. Chapter 1 was too bo
 3.29:
 A. We would get a infinite loop(if the continue statement was placed before the i was updated).
 B. Make the goto destination be the end of the loop before the update of i.
+
+
+3.30:
+A. -1 0 1 2 4 5 7
+B. Labels 0 and 7 jump to L5. And labels 2 and 4 jump to L7.
