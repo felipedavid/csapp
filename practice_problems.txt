@@ -1,4 +1,4 @@
-3.1:
+3.1
 %rax            0x100
 0x104           0xAB
 $0x108          0x108
@@ -9,48 +9,52 @@ $0x108          0x108
 0xFC(,%rcx,4)   0xFF
 (%rax,%rdx,4)   0x11
 
-3.2:
+
+3.2
 movl %eax, (%rsp)
 movw (%rax), %dx
 movb $0xFF, %bl
 movb (%rsp,%rdx,4), %dl
-movq (%rdx), $rax
+movq (%rdx), %rax
 movw %dx, (%rax)
 
-3.3:
-movb $0xF, (%ebx) // Can't reference memory using 32bit registers
-movl %rax, (%rsp) // Mismatch instruction sufix and register identifier
-movw (%rax), 4(%rsp) // Can't reference memory in both operands
-movb %al, %sl // %sl is not a real register
-movq %rax, $0x123 // Can't move a value into a imediate
-movl %eax, %rdx // Mismatch between instruction suffix and register identifier
-movb %si, 8(%rbp) // Mismatch between instruction suffix and register id
 
-3.4:
-src_t           dest_t          Instruction
-long            long            movq (%rdi), %rax
-                                movq %rax, (%rsi)
+3.3
+movb $0xF, (%ebx) // Can't reference memory using the lower 32 bit of a register
+movl %rax, (%rsp) // instruction suffix and operand mismatch.
+movw (%rax), 4(%rsp) // Can't reference the memory with the two operands
+movb %al, %sl // Register %sl dosen't exist
+movq %rax, $0x123 // Can't copy something into a immediate
+movl %eax, %rdx // Operands size mismatch
+movb %si, 8(%rbp) // Instruction suffix and operand mismatch
 
-char            int             movsbl (%rdi), %eax
-                                movl %eax, (%rsi)
 
-char            unsigned        movsbl (%rdi), %eax
-                                movl %eax, (%rsi)
+3.4
+src_t               dest_t              Instruction
+long                long                movq (%rdi), %rax
+                                        movq %rax, (%rsi)
 
-unsigned char   long            movzbl (%rdi), %eax
-                                movq %rax, (%rsi)
+char                int                 movsbl (%rdi), %eax
+                                        movl %eax, (%rsi)
 
-int             char            movl (%rdi), %eax
-                                movb %al, (%rsi)
+char                unsigned            movsbl (%rdi), %eax
+                                        movl %eax, (%rsi)
 
-unsigned        unsigned char   movl (%rdi), %eax
-                                movb %al, (%rsi)
+unsigned char       long                movzbl (%rdi), %eax
+                                        movq %rax, (%rsi)
 
-char            short           movsbw (%rdi), %ax
-                                movw %ax, (%rsi)
+int                 char                movl (%rdi), %eax
+                                        movb %al, (%rsi)
+
+unsigned            unsigned char       movl (%rdi), %eax
+                                        movb %al, (%rsi)
+
+char                short               movsbw (%rdi), %ax
+                                        movw %ax, (%rsi)
+
 
 3.5:
-void decode1(long *xp, long *yp, long *zp) {
+void devocde1(long *xp, long *yp, long *zp) {
     long x = *xp;
     long y = *yp;
     long z = *zp;
@@ -60,247 +64,33 @@ void decode1(long *xp, long *yp, long *zp) {
 }
 
 
-3.6:
-leaq 6(%rax), %rdx         x+6
-leaq (%rax,%rcx), %rdx     x+y
-leaq (%rax,%rcx,4), %rdx   x+y*4
-leaq 7(%rax,%rax,8), %rdx  7+x*9
-leaq 0xA(,%rcx,4), %rdx    10+y*4
-leaq 9(%rax,%rcx,2), %rdx  9+x+y*2
+3.6
+leaq 6(%rax), %rdx          6+x
+leaq (%rax,%rcx), %rdx      x+y
+leaq (%rax,%rcx,4), %rdx    x+4y
+leaq 7(%rax,%rax,8), %rdx   7+9x
+leaq 0xA(,%rcx,4), %rdx     10+4y
+leaq 9(%rax,%rcx,2), %rdx   9+x+2y
 
 
-3.7:
-long t = x*5 + y*2 + z*8;
+3.7
+long scale2(long x, long y, long z) {
+    long t = x*5 + y*2 + z*8;
+    return t;
+}
 
 
-3.8:
-addq %rcx, (%rax)        0x100  0x100
-subq %rdx,8(%rax)        0x108  0xA8
-imulq $16, (%rax,%rdx,8) 0x118  0x110
-incq 16(%rax)            0x110  0x14
-decq %rcx                %rcx   0x0
-subq %rdx,%rax           %rax   0xFD
+3.8
+addq %rcx, (%rax)         0x100     0x100
+subq %rdx, 8(%rax)        0x108     0xA8
+imulq $16, (%rax,%rdx,8)  0x118     0x110
+incq 16(%rax)             0x110     0x14
+decq %rcx                 %rcx      0x0
+subq %rdx, %rax           %rax      0xFD
 
 
-3.9:
+3.9
 movq %rdi, %rax
-salq $4, %rax
+salq 4, %rax
 movl %esi, %ecx
 sarq %cl, %rax
-
-
-3.10:
-long t1 = x | y;
-long t2 = t1 >> 3;
-long t3 = ~t2;
-long t4 = z - t3;
-return t4;
-
-
-3.11:
-A. Set the register to 0.
-B. movq $0, %rax
-C. 2 and 5
-
-
-3.12:
-movq %rdx, %r8
-xorq %rdx, %rdx
-movq %rdi, %rax
-divq %rsi
-movq %rax, (%r8)
-movq %rdx, (%rcx)
-ret
-
-
-3.13:
-A. int
-B. short
-C. unsigned char
-D. unsigned long or long or a memory address
-
-
-3.14:
-A. long, >=
-B. short or unsigned short, ==
-C. unsigned char, >
-D. int, <=
-
-
-3.15:
-A. 4003fe
-B. 400425
-C. 400543 400545
-D. 400560
-
-3.16:
-A.
-    if (!p) goto done;
-    if (a <= *p) goto done;
-    *p = a;
-done:
-    return;
-
-B. Because we have two saparate comparison operations, first checking if p is not null and then
-comparing with a. So, if the first comparison is false, and the pointer is NULL, we don't get
-a dereferencing error.
-
-
-3.17:
-A.
-    if (x < y) goto x_less_y;
-    ge_cnt++;
-    result = x-y;
-    return result;
-x_less_y:
-    lt_cnt++;
-    result = y-x;
-    return result
-
-B. Yeah, the first one is much easier to understand.
-
-
-3.18:
-long test(long x, long y, long z) {
-    long val = x + y + z;
-    if (x < -3) {
-        if(y < z)
-            val = x * y;
-        else
-            val = y * z;
-    } else if (x > 2)
-        val = x * z;
-    return val;
-}
-
-
-3.21:
-long test(long x, long y) {
-    long val = x * 8;
-    if (y > 0) {
-        if (x < y)
-            val = y - x;
-        else
-            val = x & y;
-    } else if (rsi <= -2)
-        val = x + y;
-    return val;
-}
-
-3.23:
-A. x = %rax, y = %rcx, n = %rdx, 
-B. The compiler identified that the value being pointed to be modified is already
-in register %rdi, so it just need to update that value.
-C.
-dw_loop:
-    movq %rdi, %rax // *p = &x
-    movq %rdi, %rcx // y = x * x
-    imulq %rdi, %rcx
-    leaq (%rdi,%rdi), %rdx // n = 2*x
-.L2:
-    leaq 1(%rcx,%rax), %rax // x += y + 1
-    subqq $1, %rdx // n--
-    testq %rdx, %rdx // test n
-    jg .L2 // if n > 0, goto .L2
-    ret
-
-
-3.24:
-long result = 1;
-while (a < b) {
-    result = result * (a + b);
-    a = a + 1;
-}
-return result;
-
-
-3.25:
-long loop_while2(long a, long b) {
-    long result = b;
-    while (b > 0) {
-        result = result * a;
-        b = b - a;
-    }
-    return result;
-}
-
-
-3.26:
-A. Jump to middle
-B. 
-long fun_a(unsigned long x) {
-    long val = 0;
-    while (x) {
-        val = val ^ x;
-        x = x >> 1;
-    }
-    return val & 1;
-}
-C. What it does? I have no idea. (I need to go back and study concepts from chapter 1, haha)
-
-
-3.27:
-long fact_for_jm_goto(long n) {
-    long i = 2;
-    long result = 1;
-    if (i > n) goto done;
-loop:
-    result *= i;
-    i++;
-    if (i <= n)
-        goto loop;
-done:
-    return result;
-}
-
-
-3.28:
-A.
-long fun_b(unsigned long x) {
-    long val = 0;
-    long i;
-    for (i = 64;i > 0;i--) {
-        val = (x & 1) | (val << 1);
-        x = x >> 1;
-    }
-    return val;
-}
-
-B. Since the values are the same always when this portion starts executing,
-64 is always going to be greater than 0, so we don't need to check it.
-C. No idea. (I still don't get these bit level operations.. Chapter 1 was too boring..
-    But I will definely come back later).
-
-
-3.29:
-A. We would get a infinite loop(if the continue statement was placed before the i was updated).
-B. Make the goto destination be the end of the loop before the update of i.
-
-
-3.30:
-A. -1 0 1 2 4 5 7
-B. 0 & 7 and 2 & 4
-
-
-3.31:
-void switcher(long a, long b, long c, long *dest) {
-    long val;
-    switch(a) {
-        case 5:
-            c = b ^ 15;
-            /* Fall through */
-        case 4:
-            val = a;
-            break;
-        case 2:
-        case 7:
-            val = (b + c) / 4;
-            break;
-        case 0:
-            val = c + 112;
-            break;
-        default:
-            val = b;
-    }
-    *dest = val;
-}
